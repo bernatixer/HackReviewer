@@ -21,8 +21,9 @@ from backend import settings
 
 class MessagesAPI(ViewSet):
     serializer_class = MessageSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = (SessionAuthentication, BasicAuthentication, TokenAuthentication)
+    permission_classes = (AllowAny,)
+    # permission_classes = (permissions.IsAuthenticated,)
+    # authentication_classes = (SessionAuthentication, BasicAuthentication, TokenAuthentication)
 
     @swagger_auto_schema(request_body=MessageCreateSerializer, responses={200: "OK"})
     def create(self, request):
