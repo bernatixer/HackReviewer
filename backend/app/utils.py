@@ -6,8 +6,8 @@ from django.core.files.base import ContentFile
 from app.models import Message
 
 
-def create_message(content, image=None):
-    message = Message(content=content, image=image)
+def create_message(content, request=False, image=None):
+    message = Message(content=content, request=request, image=image)
     message.save()
 
     key_var_name = 'IMAGE_SUBSCRIPTION_KEY'

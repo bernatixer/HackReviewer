@@ -17,6 +17,7 @@ class MessageSerializer(s.Serializer):
 
 class MessageCreateSerializer(s.Serializer):
     content = s.CharField()
+    request = s.BooleanField(required=False)
     image = Base64ImageField(required=False)
 
 
