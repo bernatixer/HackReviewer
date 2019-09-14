@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'drf_yasg',
     'knox',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +133,13 @@ STATIC_ROOT = BASE_DIR + "/staticfiles"
 # Set up custom authenthication
 
 AUTH_USER_MODEL = "app.User"
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']

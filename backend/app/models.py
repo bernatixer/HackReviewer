@@ -34,12 +34,13 @@ class UserManager(BaseUserManager):
         surname,
         type=UserType.PARTICIPANT.value,
         password=None,
+        language="en",
     ):
         if not email:
             raise ValueError("A user must have an email")
 
         user = self.model(
-            email=email, name=name, surname=surname, type=type
+            email=email, name=name, surname=surname, type=type, language=language
         )
 
         user.set_password(password)

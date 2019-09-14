@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ViewSet
 
-from app.models import Message
+from app.models import Message, User
 from app.serializers import (
     MessageCreateSerializer,
     MessageSerializer,
