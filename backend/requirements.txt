@@ -2,7 +2,6 @@ Babel==2.7.0
 beautifulsoup4~=4.8.0
 bleach~=3.1.0
 bleach-whitelist~=0.0.10
-CairoSVG~=2.4.0
 celery~=4.3.0
 Django==2.2.4
 django-bootstrap4~=0.0.8
@@ -11,12 +10,15 @@ django-cors-headers~=3.1.0
 django-money==0.15
 django-phonenumber-field==3.0.1
 django-versatileimagefield~=1.10
+django-rest-swagger~=2.2.0
 djangorestframework~=3.10.3
+drf-yasg~=3.9.6
 gunicorn~=19.9.0
 html2text~=2018.1.9
 ipaddress~=1.0.22
 django-markup~=1.4.1
 markdown~=3.1.1
+packaging~=19.1
 phonenumbers==8.10.14
 pyyaml~=5.1.1
 psycopg2-binary~=2.8.3
