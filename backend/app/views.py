@@ -29,7 +29,9 @@ class MessagesAPI(ViewSet):
         serializer = MessageCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         create_message(**serializer.validated_data)
-        return HttpResponse(200)
+        response = HttpResponse(200)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
     def list(self, request):
         if request.user.is_authenticated:
@@ -37,7 +39,9 @@ class MessagesAPI(ViewSet):
         else:
             messages = []
         serializer = self.serializer_class(messages, many=True)
-        return Response(serializer.data)
+        response = Response(serializer.data)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
 
 class RegistrationAPI(ViewSet):
@@ -49,12 +53,14 @@ class RegistrationAPI(ViewSet):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        return Response(
+        response = Response(
             {
                 "user": UserSerializer(user, context=self.serializer_class()).data,
                 "token": AuthToken.objects.create(user)[1],
             }
         )
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
 
 class LoginAPI(ViewSet):
@@ -66,15 +72,18 @@ class LoginAPI(ViewSet):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
-        return Response(
+        response = Response(
             {
                 "user": UserSerializer(user, context=self.serializer_class()).data,
                 "token": AuthToken.objects.create(user)[1],
             }
         )
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
 
 
 def files(request, file_):
     response = StreamingHttpResponse(open(settings.BASE_DIR + "/files/" + file_, "rb"))
     response["Content-Type"] = ""
+    response['Access-Control-Allow-Origin'] = '*'
     return response
