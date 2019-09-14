@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DOMAIN = os.environ.get("DOMAIN", "localhost:8000")
+ALLOWED_HOSTS.append(DOMAIN)
+ALLOWED_HOSTS.append("www." + DOMAIN)
+
 
 # Application definition
 
