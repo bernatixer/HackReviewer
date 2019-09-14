@@ -11,6 +11,8 @@ from app import views
 
 router = SimpleRouter()
 router.register("messages", views.MessagesAPI, "messages")
+router.register("auth/signup", views.RegistrationAPI, "signup")
+router.register("auth/login", views.LoginAPI, "login")
 
 api_patterns = [
     url(r"^", include(router.urls)),

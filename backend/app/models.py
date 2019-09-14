@@ -89,6 +89,16 @@ class User(AbstractBaseUser):
     def full_name(self):
         return self.name + " " + self.surname
 
+    @property
+    def is_staff(self):
+        return True
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
+
     def __str__(self):
         return self.full_name
 
@@ -97,3 +107,6 @@ class Message(models.Model):
     content = models.TextField(max_length=1000)
     language = models.CharField(max_length=2, default="en")
     tags = models.TextField(max_length=1000, default="")
+
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
