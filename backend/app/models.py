@@ -94,7 +94,6 @@ class User(AbstractBaseUser):
 
 
 class Message(models.Model):
-    title = models.CharField(max_length=255)
     content = models.TextField(max_length=1000)
     language = models.CharField(max_length=2, default="en")
     tags = models.TextField(max_length=1000, default="")

@@ -5,12 +5,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ViewSet
 
 from app.models import Message
-from app.serializers import MessageCreateSerializer
+from app.serializers import MessageCreateSerializer, MessageSerializer
 from app.utils import create_message
 
 
 class MessagesAPI(ViewSet):
-    serializer_class = MessageCreateSerializer
+    serializer_class = MessageSerializer
     permission_classes = (AllowAny,)
 
     @swagger_auto_schema(

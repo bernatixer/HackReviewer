@@ -5,24 +5,24 @@ import requests
 from app.models import Message
 
 
-def create_message(title, content):
-    message = Message(title=title, content=content)
+def create_message(content):
+    message = Message(content=content)
     message.save()
 
     key_var_name = 'TEXT_ANALYTICS_SUBSCRIPTION_KEY'
-    if not key_var_name in os.environ:
+    if key_var_name not in os.environ:
         raise Exception('Please set/export the environment variable: {}'.format(key_var_name))
     subscription_key = os.environ[key_var_name]
 
     endpoint_var_name = 'TEXT_ANALYTICS_ENDPOINT'
-    if not endpoint_var_name in os.environ:
+    if endpoint_var_name not in os.environ:
         raise Exception('Please set/export the environment variable: {}'.format(endpoint_var_name))
     endpoint = os.environ[endpoint_var_name]
 
     language_api_url = endpoint + "/text/analytics/v2.1/languages"
 
     documents = {"documents": [
-        {"id": "2", "text": message.content}
+        {"id": "1", "text": message.content}
     ]}
 
     headers = {"Ocp-Apim-Subscription-Key": subscription_key}
