@@ -1,0 +1,92 @@
+import uuid
+
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.db import models
+from django.utils import timezone
+from versatileimagefield.fields import VersatileImageField
+
+from app.enums import UserType
+
+
+class UserManager(BaseUserManager):
+    def create_participant(
+        self, email, name, surname, password
+    ):
+        if not email:
+            raise ValueError("A user must have an email")
+
+        user = self.model(
+            email=email,
+            name=name,
+            surname=surname,
+            type=UserType.PARTICIPANT.value,
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(
+        self,
+        email,
+        name,
+        surname,
+        type=UserType.PARTICIPANT.value,
+        password=None,
+    ):
+        if not email:
+            raise ValueError("A user must have an email")
+
+        user = self.model(
+            email=email, name=name, surname=surname, type=type
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, name, surname, password):
+        user = self.create_user(
+            email, name, surname, UserType.ORGANISER.value, password
+        )
+        user.save(using=self._db)
+        return user
+
+
+class User(AbstractBaseUser):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    email = models.EmailField(max_length=255, unique=True)
+    name = models.CharField(verbose_name="First name", max_length=255)
+    surname = models.CharField(verbose_name="Last name", max_length=255)
+
+    email_verified = models.BooleanField(default=False)
+    verify_key = models.CharField(max_length=127, blank=True, null=True)
+    verify_expiration = models.DateTimeField(default=timezone.now)
+
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    type = models.PositiveSmallIntegerField(
+        choices=((u.value, u.name) for u in UserType),
+        default=UserType.PARTICIPANT.value,
+    )
+
+    language = models.CharField(max_length=2, default="en")
+
+    # Personal information
+    picture = VersatileImageField(
+        "Image"
+    )
+
+    objects = UserManager()
+
+    USERNAME_FIELD = "email"
+    EMAIL_FIELD = "email"
+    REQUIRED_FIELDS = ["name", "surname"]
+
+    @property
+    def full_name(self):
+        return self.name + " " + self.surname
+
+    def __str__(self):
+        return self.full_name
