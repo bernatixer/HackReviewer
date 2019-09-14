@@ -38,7 +38,7 @@ class MessagesAPI(ViewSet):
         if request.user.is_authenticated:
             messages = get_messages(language=request.user.language)
         else:
-            messages = []
+            messages = get_messages(language="en")
         serializer = self.serializer_class(messages, many=True)
         response = Response(serializer.data)
         response['Access-Control-Allow-Origin'] = '*'
