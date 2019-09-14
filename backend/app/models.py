@@ -1,6 +1,7 @@
 import uuid
 
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
 from versatileimagefield.fields import VersatileImageField
@@ -90,3 +91,10 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.full_name
+
+
+class Message(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField(max_length=1000)
+    language = models.CharField(max_length=2, default="en")
+    tags = models.TextField(max_length=1000, default="")
