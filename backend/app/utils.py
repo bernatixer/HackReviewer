@@ -83,7 +83,7 @@ def get_messages(language: str = "en"):
             headers = {"Ocp-Apim-Subscription-Key": subscription_key}
             response = requests.post(translation_api_url, headers=headers, json=text)
             translations = response.json()
-            tmp_img = dict(id=msg.id, content=translations[0]["translations"][0]["text"], language=msg.language, tags=[t for t in msg.tags.split(";") if t], resolved=msg.resolved)
+            tmp_img = dict(id=msg.id, content=translations[0]["translations"][0]["text"], language=msg.language, tags=[t for t in msg.tags.split(";") if t], resolved=msg.resolved, request=msg.request)
             if msg.image:
                 tmp_img["image"] = "https://" + os.environ["DOMAIN"] + "/" + msg.image.url
                 tmp_img["image_tags"] = [t for t in msg.image_tags.split(";") if t]
