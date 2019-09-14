@@ -8,8 +8,11 @@
     "react-scripts": "3.1.1",
     "axios": "^0.18.0",
     "reqwest": "^2.0.5",
-    "antd": "^3.16.1",
-    "react-router-dom": "^5.0.0"
+    "antd": "3.19.0",
+    "react-router-dom": "^5.0.0",
+    "react-cookie": "4.0.0",
+    "react-device-detect": "1.6.2",
+    "universal-cookie": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
