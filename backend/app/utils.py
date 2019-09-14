@@ -18,11 +18,14 @@ def create_message(content, image=None):
     language_api_url = "https://canadacentral.api.cognitive.microsoft.com/vision/v2.0/analyze?visualFeatures=Tags&language=en"
 
     images = {"url": "https://" + os.environ["DOMAIN"] + "/files/" + message.image.url}
+    print(images)
 
     headers = {"Ocp-Apim-Subscription-Key": subscription_key}
     response = requests.post(language_api_url, headers=headers, json=images)
     tags = response.json()
-    message.image_tags = ";".join([t["name"] for t in tags["tags"] if t["confidence"] > 0.5][:5])
+    if "tags" in tags:
+        message.image_tags = ";".join([t["name"] for t in tags["tags"] if t["confidence"] > 0.5][:5])
+        message.save()
 
     key_var_name = 'TEXT_ANALYTICS_SUBSCRIPTION_KEY'
     if key_var_name not in os.environ:
