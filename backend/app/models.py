@@ -109,6 +109,9 @@ class Message(models.Model):
     language = models.CharField(max_length=2, default="en")
     tags = models.TextField(max_length=1000, default="")
 
+    deleted = models.BooleanField(default=False)
+    resolved = models.BooleanField(default=False)
+
     image = VersatileImageField(
         "Image", upload_to="files/message"
     )

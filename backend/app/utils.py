@@ -63,7 +63,7 @@ def create_message(content, image=None):
 
 
 def get_messages(language: str = "en"):
-    messages = Message.objects.all().order_by("created_at")
+    messages = Message.objects.filter(deleted=False).order_by("created_at")
     msgs = []
 
     key_var_name = 'TRANSLATE_ANALYTICS_SUBSCRIPTION_KEY'
@@ -83,7 +83,7 @@ def get_messages(language: str = "en"):
             headers = {"Ocp-Apim-Subscription-Key": subscription_key}
             response = requests.post(translation_api_url, headers=headers, json=text)
             translations = response.json()
-            tmp_img = dict(id=msg.id, content=translations[0]["translations"][0]["text"], language=msg.language, tags=[t for t in msg.tags.split(";") if t])
+            tmp_img = dict(id=msg.id, content=translations[0]["translations"][0]["text"], language=msg.language, tags=[t for t in msg.tags.split(";") if t], resolved=msg.resolved)
             if msg.image:
                 tmp_img["image"] = "https://" + os.environ["DOMAIN"] + "/" + msg.image.url
                 tmp_img["image_tags"] = [t for t in msg.image_tags.split(";") if t]

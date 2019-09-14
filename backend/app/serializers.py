@@ -9,6 +9,7 @@ class MessageSerializer(s.Serializer):
     id = s.IntegerField()
     content = s.CharField()
     language = s.CharField()
+    resolved = s.BooleanField()
     tags = s.ListField(child=s.CharField())
     image = s.CharField(required=False)
     image_tags = s.ListField(child=s.CharField(), required=False)

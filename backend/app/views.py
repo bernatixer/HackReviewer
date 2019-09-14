@@ -3,6 +3,7 @@ from drf_yasg.utils import swagger_auto_schema
 from knox.models import AuthToken
 from rest_framework import permissions
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ViewSet
@@ -41,6 +42,24 @@ class MessagesAPI(ViewSet):
             messages = get_messages(language="en")
         serializer = self.serializer_class(messages, many=True)
         response = Response(serializer.data)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+
+    @action(detail=True, methods=["post"])
+    def delete(self, request, pk):
+        msg = Message.objects.get(id=pk)
+        msg.deleted = True
+        msg.save()
+        response = HttpResponse(200)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+
+    @action(detail=True, methods=["post"])
+    def resolve(self, request, pk):
+        msg = Message.objects.get(id=pk)
+        msg.resolved = True
+        msg.save()
+        response = HttpResponse(200)
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
