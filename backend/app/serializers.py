@@ -17,15 +17,17 @@ class MessageCreateSerializer(s.Serializer):
 class CreateUserSerializer(s.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'name', 'surname', 'password', 'language')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ("email", "name", "surname", "password", "language")
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        user = User(email=validated_data['email'],
-                                        password=validated_data['password'],
-                                        name=validated_data['name'],
-                                        surname=validated_data['surname'],
-                                        language=validated_data['language'])
+        user = User(
+            email=validated_data["email"],
+            password=validated_data["password"],
+            name=validated_data["name"],
+            surname=validated_data["surname"],
+            language=validated_data["language"],
+        )
         user.save()
         return user
 
@@ -33,11 +35,11 @@ class CreateUserSerializer(s.ModelSerializer):
 class UserSerializer(s.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'language')
+        fields = ("id", "email", "language")
 
 
 class LoginUserSerializer(s.Serializer):
-    email = s.CharField()
+    username = s.CharField()
     password = s.CharField()
 
     def validate(self, data):
