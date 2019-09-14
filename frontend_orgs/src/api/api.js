@@ -3,7 +3,7 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
-const baseURL = "http://htn.oriolclosa.dev/api/v1.0";
+const baseURL = "https://htn.oriolclosa.dev/api/v1.0/";
 
 const api = axios.create({
     baseURL: baseURL

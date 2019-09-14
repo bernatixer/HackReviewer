@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Form, Icon, Input, Button, notification } from 'antd';
-import 'antd/es/date-picker/style/css';
 import './Login.css'
 import api, {setSid, setUsername, setAccess} from "../../api/api";
 import {BrowserView} from "react-device-detect";
