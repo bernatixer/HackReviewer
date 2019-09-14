@@ -17,8 +17,7 @@ def create_message(content, image=None):
 
     language_api_url = "https://canadacentral.api.cognitive.microsoft.com/vision/v2.0/analyze?visualFeatures=Tags&language=en"
 
-    images = {"url": "https://" + os.environ["DOMAIN"] + "/files/" + message.image.url}
-    print(images)
+    images = {"url": "https://" + os.environ["DOMAIN"] + "/" + message.image.url}
 
     headers = {"Ocp-Apim-Subscription-Key": subscription_key}
     response = requests.post(language_api_url, headers=headers, json=images)
