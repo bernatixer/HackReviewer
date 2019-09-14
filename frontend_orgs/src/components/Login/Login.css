@@ -1,11 +1,19 @@
 .login-form {
-    padding-left: 20%;
-    padding-right: 45%;
+    padding-left: 35%;
+    padding-right: 30%;
     padding-top: 10%;
+    align-self: center;
 }
 
 .login-form-button {
     width: 100%;
+}
+
+.image-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
 }
 
 .login-background {
@@ -19,6 +27,18 @@
     top: 0;
     bottom: 0;
     z-index: -9999;
+}
+
+.login-form-button .login-input {
+    padding-bottom: 2%;
+    margin-top: 5%;
+    display: flex;
+    margin: 1%;
+    width: 60%;
+}
+
+formItem-form {
+    color: coral;
 }
 
 .login-title {
