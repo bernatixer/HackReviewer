@@ -1,7 +1,8 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, StreamingHttpResponse
 from drf_yasg.utils import swagger_auto_schema
 from knox.models import AuthToken
 from rest_framework import permissions
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ViewSet
@@ -15,11 +16,13 @@ from app.serializers import (
     LoginUserSerializer,
 )
 from app.utils import create_message, get_messages
+from backend import settings
 
 
 class MessagesAPI(ViewSet):
     serializer_class = MessageSerializer
     permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication, BasicAuthentication, TokenAuthentication)
 
     @swagger_auto_schema(request_body=MessageCreateSerializer, responses={200: "OK"})
     def create(self, request):
@@ -69,3 +72,9 @@ class LoginAPI(ViewSet):
                 "token": AuthToken.objects.create(user)[1],
             }
         )
+
+
+def files(request, file_):
+    response = StreamingHttpResponse(open(settings.BASE_DIR + "/files/" + file_, "rb"))
+    response["Content-Type"] = ""
+    return response

@@ -77,7 +77,7 @@ class User(AbstractBaseUser):
 
     # Personal information
     picture = VersatileImageField(
-        "Image"
+        "Image", upload_to="files/user"
     )
 
     objects = UserManager()
@@ -108,6 +108,11 @@ class Message(models.Model):
     content = models.TextField(max_length=1000)
     language = models.CharField(max_length=2, default="en")
     tags = models.TextField(max_length=1000, default="")
+
+    image = VersatileImageField(
+        "Image", upload_to="files/message"
+    )
+    image_tags = models.TextField(max_length=1000, default="")
 
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)

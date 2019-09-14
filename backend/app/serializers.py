@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers as s
 
 from app.models import User
@@ -8,10 +9,13 @@ class MessageSerializer(s.Serializer):
     content = s.CharField()
     language = s.CharField()
     tags = s.CharField()
+    image = s.CharField(required=False)
+    image_tags = s.CharField(required=False)
 
 
 class MessageCreateSerializer(s.Serializer):
     content = s.CharField()
+    image = Base64ImageField(required=False)
 
 
 class CreateUserSerializer(s.ModelSerializer):

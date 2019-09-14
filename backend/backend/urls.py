@@ -37,5 +37,6 @@ api_patterns += [
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/v1.0/", include((api_patterns, "backend"), namespace="v1.0"))
+    path("api/v1.0/", include((api_patterns, "backend"), namespace="v1.0")),
+    url(r"^files/(?P<file_>.*)$", views.files, name="files"),
 ]

@@ -1,13 +1,28 @@
 import os
-
 import requests
+import base64
+from django.core.files.base import ContentFile
 
 from app.models import Message
 
 
-def create_message(content):
-    message = Message(content=content)
+def create_message(content, image=None):
+    message = Message(content=content, image=image)
     message.save()
+
+    key_var_name = 'IMAGE_SUBSCRIPTION_KEY'
+    if key_var_name not in os.environ:
+        raise Exception('Please set/export the environment variable: {}'.format(key_var_name))
+    subscription_key = os.environ[key_var_name]
+
+    language_api_url = "https://canadacentral.api.cognitive.microsoft.com/vision/v2.0/analyze?visualFeatures=Tags&language=en"
+
+    images = {"url": "https://" + os.environ["DOMAIN"] + "/files/" + message.image.url}
+
+    headers = {"Ocp-Apim-Subscription-Key": subscription_key}
+    response = requests.post(language_api_url, headers=headers, json=images)
+    tags = response.json()
+    message.image_tags = ";".join([t["name"] for t in tags["tags"] if t["confidence"] > 0.5][:5])
 
     key_var_name = 'TEXT_ANALYTICS_SUBSCRIPTION_KEY'
     if key_var_name not in os.environ:
