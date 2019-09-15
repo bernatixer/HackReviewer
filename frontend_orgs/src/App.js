@@ -5,7 +5,6 @@ import Login from './components/Login/Login.js'
 import { MainPage } from './components/MainPage/MainPage.js';
 import 'antd/dist/antd.css'
 
-
 function App() {
   return (
     <BrowserRouter>
